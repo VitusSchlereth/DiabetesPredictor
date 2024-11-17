@@ -5,6 +5,8 @@ This project aims to predict the likelihood of diabetes based on several health 
 
 The app implements a **Random Forest classifier**, an ensemble learning technique, which improves predictive performance by combining multiple decision trees. This model is evaluated using key performance metrics, such as the confusion matrix, classification report, and ROC curve.
 
+Check out the deployed app here: [Diabetes Predictor App](https://diabetespredictor-4fffjlspqdzvshaswux3pa.streamlit.app/)
+
 ## Dataset Description
 
 The dataset used in this project is based on **diabetes patients** and contains various health-related features. It is a binary classification problem, where the task is to predict if a person has diabetes based on the following variables.
