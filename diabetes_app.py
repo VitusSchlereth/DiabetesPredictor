@@ -1,7 +1,6 @@
 import pickle
 import streamlit as st
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
@@ -52,11 +51,8 @@ def make_prediction(model, scaler, inputs):
     # Scale the input data using the loaded scaler
     df_scaled = scaler.transform(df)
     
-    # Convert the scaled data to a NumPy array (this removes feature names)
-    df_scaled_np = np.array(df_scaled)
-    
     # Get the prediction
-    prediction = model.predict(df_scaled_np)
+    prediction = model.predict(df_scaled)
     
     return prediction
 
