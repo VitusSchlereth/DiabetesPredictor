@@ -2,7 +2,11 @@ import pickle
 import streamlit as st
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import confusion_matrix, classification_report, f1_score
+from sklearn.model_selection import train_test_split
 from PIL import Image
 
 # Load the diabetes dataset
