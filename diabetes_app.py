@@ -83,11 +83,11 @@ if tab_selection == "Prediction":
 
         # Display the result with corresponding image
         if prediction == 0:  # No Diabetes
-            result_image = Image.open('./data/high_res_negative.png')
+            result_image = Image.open('./data/high_res_positive.png')
             st.image(result_image, width=150)
             st.write("Model predicts: No Diabetes")
         else:  # Diabetes
-            result_image = Image.open('./data/high_res_positive.png')
+            result_image = Image.open('./data/high_res_negative.png')
             st.image(result_image, width=150)
             st.write("Model predicts: Diabetes")
 # Data Tab
