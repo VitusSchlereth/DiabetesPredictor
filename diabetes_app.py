@@ -57,8 +57,8 @@ if tab_selection == "Prediction":
     st.image(header_image, use_column_width=True)
 
     # Page Title
-    st.title("Diabetes Prediction")
-    st.markdown("This app predicts whether a person has diabetes based on certain health metrics.")
+    st.title("Diabetes Prediction Interface")
+    st.markdown("Please enter all your relevant health metrics below and press the "Predict" button to get your prediction. If you don't have all information or are not sure just leave the current value in the field")
 
     # Create two columns for input fields
     col1, col2 = st.columns(2)
@@ -89,11 +89,11 @@ if tab_selection == "Prediction":
         if prediction == 0:  # No Diabetes
             result_image = Image.open('./data/high_res_positive.png')
             st.image(result_image, width=150)
-            st.write("Model predicts: No Diabetes")
+            st.write("The model predicts that you are unlikely to have diabetes. Be aware that this does not constitute an official diagnosis!")
         else:  # Diabetes
             result_image = Image.open('./data/high_res_negative.png')
             st.image(result_image, width=150)
-            st.write("Model predicts: Diabetes")
+            st.write("The model predicts that you could have diabetes. Be aware that this does not constitute an official diagnosis!")
 
 # Data Tab
 elif tab_selection == "Data":
