@@ -8,7 +8,7 @@ from PIL import Image
 # Load the diabetes dataset
 @st.cache_data()
 def load_data():
-    df = pd.read_csv('./data/diabetes.csv')  # Adjust the path based on your folder structure
+    df = pd.read_csv('./data/diabetes.csv') 
     return df
 
 # Load the pre-trained model and scaler from the pickle files
