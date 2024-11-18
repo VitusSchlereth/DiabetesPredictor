@@ -58,7 +58,7 @@ if tab_selection == "Prediction":
 
     # Page Title
     st.title("Diabetes Prediction Interface")
-    st.markdown("Please enter all your relevant health metrics below and press the "Predict" button to get your prediction. If you don't have all information or are not sure just leave the current value in the field")
+    st.markdown("Please enter all your relevant health metrics below and press the **Predict** button to get your prediction. If you don't have all information or are not sure just leave the current value in the field")
 
     # Create two columns for input fields
     col1, col2 = st.columns(2)
