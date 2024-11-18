@@ -90,6 +90,7 @@ if tab_selection == "Prediction":
             result_image = Image.open('./data/high_res_negative.png')
             st.image(result_image, width=150)
             st.write("Model predicts: Diabetes")
+
 # Data Tab
 elif tab_selection == "Data":
     st.title('Data Visualizations')
