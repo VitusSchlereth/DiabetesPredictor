@@ -2,24 +2,18 @@ import pickle
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import confusion_matrix, classification_report, f1_score
-from sklearn.model_selection import train_test_split
 from PIL import Image
 
 # Load the diabetes dataset
 @st.cache_data()
 def load_data():
-    # Use relative path to the CSV file stored in the repo
     df = pd.read_csv('./data/diabetes.csv')  # Adjust the path based on your folder structure
     return df
 
 # Load the pre-trained model and scaler from the pickle files
 @st.cache_data()
 def load_model():
-    # Use relative path to the model file stored in the repo
     with open('./data/model.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
     return model
@@ -27,14 +21,12 @@ def load_model():
 # Load the pre-fitted scaler from the pickle file
 @st.cache_data()
 def load_scaler():
-    # Use relative path to the scaler file stored in the repo
     with open('./data/scaler.pkl', 'rb') as scaler_file:
         scaler = pickle.load(scaler_file)
     return scaler
 
 # Prediction function
 def make_prediction(model, scaler, inputs):
-    # Prepare the input data in a DataFrame
     data = {
         "Pregnancies": inputs[0],
         "Glucose": inputs[1],
@@ -45,19 +37,10 @@ def make_prediction(model, scaler, inputs):
         "DiabetesPedigreeFunction": inputs[6],
         "Age": inputs[7]
     }
-    
-    # Convert data into a DataFrame
     df = pd.DataFrame([data])
-    
-    # Scale the input data using the loaded scaler
     df_scaled = scaler.transform(df)
-    
-    # Convert the scaled data to a NumPy array (this removes feature names)
     df_scaled_np = np.array(df_scaled)
-    
-    # Get the prediction
     prediction = model.predict(df_scaled_np)
-    
     return prediction
 
 # Sidebar for navigation
@@ -65,6 +48,10 @@ st.sidebar.title("Navigation")
 tab_selection = st.sidebar.radio("Select a Tab", ["Prediction", "Data", "Model"])
 
 if tab_selection == "Prediction":
+    # Header Image
+    header_image = Image.open('./data/high_res_header.png')
+    st.image(header_image, use_column_width=True)
+
     # Page Title
     st.title("Diabetes Prediction")
     st.markdown("This app predicts whether a person has diabetes based on certain health metrics.")
@@ -72,7 +59,6 @@ if tab_selection == "Prediction":
     # Create two columns for input fields
     col1, col2 = st.columns(2)
 
-    # Input fields for user data (4 fields in each column)
     with col1:
         age = st.number_input("Age", min_value=18, max_value=120, value=30)
         bmi = st.number_input("BMI", min_value=10.0, max_value=70.0, value=25.0)
@@ -82,27 +68,28 @@ if tab_selection == "Prediction":
     with col2:
         blood_pressure = st.number_input("Blood Pressure", min_value=0, max_value=200, value=80)
         skin_thickness = st.number_input("Skin Thickness", min_value=0, max_value=100, value=20)
-        diabetes_pedigree_function = st.number_input("Diabetes Pedigree Function", min_value=0.0, max_value=2.5, value=0.47)
-        pregnancies = st.number_input("Pregnancies", min_value=0, max_value=20, value=3)
+        diabetes_pedigree_function = st.number_input("Diabetes Pedigree Function", min_value=0.0, max_value=2.5, value=0.5)
+        pregnancies = st.number_input("Pregnancies", min_value=0, max_value=20, value=2)
 
-    # Collect inputs into a list
-    inputs = [pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree_function, age]
-
-    # Load the model and scaler
+    # Load model and scaler
     model = load_model()
     scaler = load_scaler()
 
     # Prediction button
     if st.button("Predict"):
-        # Get the prediction result
+        # Make prediction
+        inputs = [pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, diabetes_pedigree_function, age]
         prediction = make_prediction(model, scaler, inputs)
 
-        # Display the result
-        if prediction[0] == 1:
-            st.success("The model predicts: **Diabetes**")
-        else:
-            st.success("The model predicts: **No Diabetes**")
-
+        # Display the result with corresponding image
+        if prediction == 0:  # No Diabetes
+            result_image = Image.open('./data/high_res_negative.png')
+            st.image(result_image, width=150)
+            st.write("Model predicts: No Diabetes")
+        else:  # Diabetes
+            result_image = Image.open('./data/high_res_positive.png')
+            st.image(result_image, width=150)
+            st.write("Model predicts: Diabetes")
 # Data Tab
 elif tab_selection == "Data":
     st.title('Data Visualizations')
